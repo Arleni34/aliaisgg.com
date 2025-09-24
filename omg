@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fun Login & Signup</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .container {
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+      padding: 2.5rem 3rem;
+      min-width: 320px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: popin 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes popin {
+      0% { transform: scale(0.7);}
+      100% { transform: scale(1);}
+    }
+    .title {
+      font-size: 2.1rem;
+      color: #7f53ac;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+    .input-group {
+      margin: 1.2rem 0;
+      text-align: left;
+      position: relative;
+    }
+    .input-group label {
+      font-size: 1rem;
+      color: #7f53ac;
+      margin-bottom: .2rem;
+      display: block;
+      font-weight: 600;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      border: 2px solid #e0c3fc;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .input-group input:focus {
+      border-color: #7f53ac;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .fun-btn {
+      padding: 0.8rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.13);
+    }
+    .fun-btn:hover {
+      background: linear-gradient(90deg, #647dee 0%, #7f53ac 100%);
+      transform: scale(1.05);
+    }
+    .switch-link {
+      color: #647dee;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: 1.2rem;
+      display: inline-block;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+    .switch-link:hover {
+      color: #7f53ac;
+    }
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      animation: bounce 1.2s infinite alternate cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes bounce {
+      0% { transform: translateY(0);}
+      100% { transform: translateY(-8px);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="auth-container">
+    <!-- Content will be injected by JS -->
+  </div>
+
+  <script>
+    // Initial state
+    let isSignup = true;
+    const container = document.getElementById('auth-container');
+
+    function renderForm() {
+      container.innerHTML = `
+        <div class="emoji">${isSignup ? '🎉' : '👋'}</div>
+        <div class="title">${isSignup ? 'Create Account' : 'Login'}</div>
+        <form id="auth-form">
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input required type="text" id="username" name="username" placeholder="Your username">
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input required type="password" id="password" name="password" placeholder="Your password">
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="fun-btn">${isSignup ? 'Sign Up' : 'Login'}</button>
+          </div>
+        </form>
+        <span class="switch-link" id="switch-link">
+          ${isSignup ? 'Already have an account? Login' : "Don't have an account? Create one"}
+        </span>
+      `;
+
+      document.getElementById('switch-link').onclick = () => {
+        isSignup = !isSignup;
+        renderForm();
+      };
+
+      document.getElementById('auth-form').onsubmit = (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        alert((isSignup ? "Account created for " : "Welcome back, ") + username + "!\n(Just for fun, not real auth!)");
+        e.target.reset();
+      };
+    }
+
+    renderForm();
+  </script>
+</body>
+</html>
